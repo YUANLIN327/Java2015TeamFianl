@@ -15,6 +15,12 @@ public class IntelPOS {
 		//I made another change
 		System.out.println("test2");
 		System.out.println("test3");
+		
+		
+	}
+	//define coffee class
+	class coffee{
+		String name;
 	}
 
 }
