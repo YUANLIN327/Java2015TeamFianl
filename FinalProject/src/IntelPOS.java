@@ -19,6 +19,8 @@ public class IntelPOS {
 		System.out.println("test4");
 		//Claudia made another change
 		
+		//LIn made a change
+		
 	}
 	//no need to add the coffee class
 
