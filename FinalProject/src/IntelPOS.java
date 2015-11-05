@@ -8,6 +8,10 @@ public class IntelPOS {
 		
 		//Hallie says hi
 		//xi says hi I have made a change
+		
+		String abc="lalal";
+		int num = 123;
+		System.out.println(abc +num);
 	}
 
 }
