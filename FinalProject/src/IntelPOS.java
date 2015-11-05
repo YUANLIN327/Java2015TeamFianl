@@ -8,6 +8,10 @@ public class IntelPOS {
 		
 		//Hallie says hi
 		//xi says hi I have made a change
+		
+		//I made another change
+		System.out.println("test2");
+		System.out.println("test3");
 	}
 
 }
