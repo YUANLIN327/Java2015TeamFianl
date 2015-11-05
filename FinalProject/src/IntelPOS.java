@@ -18,9 +18,6 @@ public class IntelPOS {
 		
 		
 	}
-	//define coffee class
-	class coffee{
-		String name;
-	}
+	//no need to add the coffee class
 
 }
