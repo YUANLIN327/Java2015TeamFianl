@@ -6,6 +6,7 @@ public class IntelPOS {
 		System.out.println("test1");
 		
 		//Hallie says hi
+		//xi says hi
 	}
 
 }
