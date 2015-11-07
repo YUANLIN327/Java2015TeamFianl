@@ -1,3 +1,4 @@
+import java.awt.CardLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,9 @@ import javax.swing.UIManager;
 public class CoffeePanel extends JFrame {
 
 	private JPanel contentPane;
+	BufferedImage buttonIcon1 = ImageIO.read(new File("coffee1.jpg"));	
+	BufferedImage buttonIcon2 = ImageIO.read(new File("coffee2.jpg"));
+	CardLayout c1 = new CardLayout();
 
 	/**
 	 * Launch the application.
@@ -46,6 +50,46 @@ public class CoffeePanel extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
+		
+		JPanel pnlContainer = new JPanel();
+		pnlContainer.setBounds(361, 44, 387, 428);
+		pnlContainer.setLayout(c1);
+		contentPane.add(pnlContainer);
+		
+		JPanel pnlMenu = new JPanel();
+		pnlMenu.setLayout(null);
+		pnlMenu.setBackground(UIManager.getColor("textHighlight"));
+		pnlMenu.setBounds(370, 44, 378, 428);
+		pnlContainer.add(pnlMenu,"Menu");
+		c1.show(pnlContainer, "Menu");
+		
+		
+		JButton btnIceCoffee = new JButton(new ImageIcon(buttonIcon1));
+		btnIceCoffee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});		
+		btnIceCoffee.setBounds(27, 62, 117, 68);
+		pnlMenu.add(btnIceCoffee);
+		JButton btnLattee = new JButton(new ImageIcon(buttonIcon2));
+		btnLattee.setBounds(210, 62, 117, 68);
+		pnlMenu.add(btnLattee);
+		
+		JButton btnMocha = new JButton("Mocha");
+		btnMocha.setBounds(27, 161, 117, 68);
+		pnlMenu.add(btnMocha);
+		
+		JButton btnFrabuchinno = new JButton("Frabuchinno");
+		btnFrabuchinno.setBounds(210, 161, 117, 68);
+		pnlMenu.add(btnFrabuchinno);
+		
+		JButton btnBlackTea = new JButton("Black Tea");
+		btnBlackTea.setBounds(27, 253, 117, 68);
+		pnlMenu.add(btnBlackTea);
+		
+		JButton btnChai = new JButton("Chai");
+		btnChai.setBounds(210, 253, 117, 68);
+		pnlMenu.add(btnChai);
 		
 		JButton btnNewButton = new JButton("Cancel");
 		btnNewButton.setBounds(25, 395, 84, 33);
@@ -122,40 +166,6 @@ public class CoffeePanel extends JFrame {
 		lblJohnDoe.setBounds(10, 22, 91, 14);
 		contentPane.add(lblJohnDoe);
 		
-		JPanel pnlMenu = new JPanel();
-		pnlMenu.setLayout(null);
-		pnlMenu.setBackground(UIManager.getColor("textHighlight"));
-		pnlMenu.setBounds(370, 44, 378, 428);
-		contentPane.add(pnlMenu);
-		
-		BufferedImage buttonIcon1 = ImageIO.read(new File("coffee1.jpg"));
-		JButton btnIceCoffee = new JButton(new ImageIcon(buttonIcon1));
-		btnIceCoffee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});		
-		btnIceCoffee.setBounds(27, 62, 117, 68);
-		pnlMenu.add(btnIceCoffee);
-		
-		BufferedImage buttonIcon2 = ImageIO.read(new File("coffee2.jpg"));
-		JButton btnLattee = new JButton(new ImageIcon(buttonIcon2));
-		btnLattee.setBounds(178, 62, 117, 68);
-		pnlMenu.add(btnLattee);
-		
-		JButton btnMocha = new JButton("Mocha");
-		btnMocha.setBounds(27, 161, 117, 68);
-		pnlMenu.add(btnMocha);
-		
-		JButton btnFrabuchinno = new JButton("Frabuchinno");
-		btnFrabuchinno.setBounds(178, 161, 117, 68);
-		pnlMenu.add(btnFrabuchinno);
-		
-		JButton btnBlackTea = new JButton("Black Tea");
-		btnBlackTea.setBounds(27, 253, 117, 68);
-		pnlMenu.add(btnBlackTea);
-		
-		JButton btnChai = new JButton("Chai");
-		btnChai.setBounds(178, 253, 117, 68);
-		pnlMenu.add(btnChai);
+
 	}
 }
