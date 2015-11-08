@@ -1,5 +1,7 @@
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -14,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 public class CoffeePanel extends JFrame {
@@ -21,7 +24,10 @@ public class CoffeePanel extends JFrame {
 	private JPanel contentPane;
 	BufferedImage buttonIcon1 = ImageIO.read(new File("coffee1.jpg"));	
 	BufferedImage buttonIcon2 = ImageIO.read(new File("coffee2.jpg"));
+	BufferedImage btnIconBack = ImageIO.read(new File("back.png"));
 	CardLayout c1 = new CardLayout();
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -58,10 +64,67 @@ public class CoffeePanel extends JFrame {
 		
 		JPanel pnlMenu = new JPanel();
 		pnlMenu.setLayout(null);
-		pnlMenu.setBackground(UIManager.getColor("textHighlight"));
-		pnlMenu.setBounds(370, 44, 378, 428);
-		pnlContainer.add(pnlMenu,"Menu");
+		pnlMenu.setBackground(UIManager.getColor("textHighlight"));		
+		pnlContainer.add(pnlMenu,"Menu");		
+		
+		JPanel pnlCheckout = new JPanel();
+		pnlCheckout.setLayout(null);
+		pnlCheckout.setBackground(SystemColor.window);
+		pnlContainer.add(pnlCheckout, "Checkout");
+		
+		textField = new JTextField();
+		textField.setBounds(39, 82, 164, 31);
+		pnlCheckout.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(244, 81, 119, 31);
+		pnlCheckout.add(textField_1);
+		
+		JButton btnNewButton_1 = new JButton("Cash");
+		btnNewButton_1.setBounds(89, 133, 105, 39);
+		pnlCheckout.add(btnNewButton_1);
+		
+		JButton btnCheck = new JButton("Check");
+		btnCheck.setBounds(204, 133, 105, 39);
+		pnlCheckout.add(btnCheck);
+		
+		JButton btnCoupon = new JButton("Coupon");
+		btnCoupon.setBounds(89, 183, 105, 39);
+		pnlCheckout.add(btnCoupon);
+		
+		JButton btnGiftCard = new JButton("Gift Card");
+		btnGiftCard.setBounds(204, 183, 105, 39);
+		pnlCheckout.add(btnGiftCard);
+		
+		JButton btnCreditdebitCard = new JButton("Credit/Debit Card");
+		btnCreditdebitCard.setBounds(114, 240, 172, 39);
+		pnlCheckout.add(btnCreditdebitCard);
+		
+		JLabel lblNewLabel_1 = new JLabel("Amounts Due");
+		lblNewLabel_1.setBounds(39, 57, 76, 14);
+		pnlCheckout.add(lblNewLabel_1);
+		
+		JLabel lblChange = new JLabel("Change: ");
+		lblChange.setBounds(249, 57, 46, 14);
+		pnlCheckout.add(lblChange);
+		
+		JButton btnBack = new JButton(new ImageIcon(btnIconBack));
+		btnBack.setBackground(SystemColor.window);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c1.show(pnlContainer, "Menu");
+			}
+		});
+		btnBack.setBounds(10, 11, 38, 39);
+		btnBack.setBorderPainted(false);
+		
+		pnlCheckout.add(btnBack);
+		
 		c1.show(pnlContainer, "Menu");
+		
+		
 		
 		
 		JButton btnIceCoffee = new JButton(new ImageIcon(buttonIcon1));
@@ -91,6 +154,11 @@ public class CoffeePanel extends JFrame {
 		btnChai.setBounds(210, 253, 117, 68);
 		pnlMenu.add(btnChai);
 		
+		JLabel lblNewLabel_2 = new JLabel("Menu");
+		lblNewLabel_2.setBounds(10, 21, 46, 14);
+		pnlMenu.add(lblNewLabel_2);
+		
+		
 		JButton btnNewButton = new JButton("Cancel");
 		btnNewButton.setBounds(25, 395, 84, 33);
 		contentPane.add(btnNewButton);
@@ -104,7 +172,12 @@ public class CoffeePanel extends JFrame {
 		contentPane.add(btnOverridePrice);
 		
 		JButton btnSubmitOrder = new JButton("Submit Order");
-		btnSubmitOrder.setBounds(247, 423, 104, 49);
+		btnSubmitOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c1.show(pnlContainer, "Checkout");
+			}
+		});
+		btnSubmitOrder.setBounds(225, 423, 126, 49);
 		contentPane.add(btnSubmitOrder);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -139,7 +212,7 @@ public class CoffeePanel extends JFrame {
 		contentPane.add(label_4);
 		
 		JLabel lblTotal = new JLabel("Total: ");
-		lblTotal.setBounds(225, 335, 70, 14);
+		lblTotal.setBounds(210, 335, 85, 14);
 		contentPane.add(lblTotal);
 		
 		JLabel label_6 = new JLabel("$ 0.00");
@@ -147,7 +220,7 @@ public class CoffeePanel extends JFrame {
 		contentPane.add(label_6);
 		
 		JLabel lblTax = new JLabel("Tax: ");
-		lblTax.setBounds(225, 310, 70, 14);
+		lblTax.setBounds(210, 310, 85, 14);
 		contentPane.add(lblTax);
 		
 		JLabel label_8 = new JLabel("$ 0.00");
@@ -155,7 +228,7 @@ public class CoffeePanel extends JFrame {
 		contentPane.add(label_8);
 		
 		JLabel lblBalanceDue = new JLabel("Balance Due: ");
-		lblBalanceDue.setBounds(225, 360, 70, 14);
+		lblBalanceDue.setBounds(210, 360, 85, 14);
 		contentPane.add(lblBalanceDue);
 		
 		JLabel label_10 = new JLabel("$ 0.00");
