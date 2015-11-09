@@ -1,5 +1,4 @@
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -7,8 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,8 +28,19 @@ public class CoffeePanel extends JFrame {
 	BufferedImage buttonIcon2 = ImageIO.read(new File("coffee2.jpg"));
 	BufferedImage btnIconBack = ImageIO.read(new File("back.png"));
 	CardLayout c1 = new CardLayout();
+	DefaultListModel<OrderItem> oidata = new DefaultListModel();
+	JList itemlist = new JList(oidata);
 	private JTextField textField;
 	private JTextField textField_1;
+	private static final double taxRate=0.0825;
+	boolean isOrderEmpty = true;
+	
+	
+	ArrayList<Order> orders = new ArrayList<Order>();
+	
+	HashMap<String, Double> items = new HashMap<String, Double>();
+	
+	
 
 	/**
 	 * Launch the application.
@@ -128,13 +141,19 @@ public class CoffeePanel extends JFrame {
 		
 		
 		JButton btnIceCoffee = new JButton(new ImageIcon(buttonIcon1));
+		btnIceCoffee.setText("Ice Coffee");
 		btnIceCoffee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
 			}
 		});		
 		btnIceCoffee.setBounds(27, 62, 117, 68);
 		pnlMenu.add(btnIceCoffee);
 		JButton btnLattee = new JButton(new ImageIcon(buttonIcon2));
+		btnLattee.setText("Hot Coffee");
 		btnLattee.setBounds(210, 62, 117, 68);
 		pnlMenu.add(btnLattee);
 		
@@ -184,8 +203,8 @@ public class CoffeePanel extends JFrame {
 		scrollPane.setBounds(36, 47, 315, 252);
 		contentPane.add(scrollPane);
 		
-		JList list = new JList();
-		scrollPane.setViewportView(list);
+		
+		scrollPane.setViewportView(itemlist);
 		
 		JLabel lblNewLabel = new JLabel("Sub Total:");
 		lblNewLabel.setBounds(36, 335, 63, 14);
@@ -239,6 +258,109 @@ public class CoffeePanel extends JFrame {
 		lblJohnDoe.setBounds(10, 22, 91, 14);
 		contentPane.add(lblJohnDoe);
 		
+		
+		items.put("Ice Coffee",2.5d);
+		items.put("Hot Coffee",3.5d);
+		items.put("Mocha",4.5d);
+		items.put("Frabuchinno",5.5d);
+		items.put("Black Tea",2.2d);
+		items.put("Chai",1.5d);
 
+	}
+	
+	public void addOrderItem(String itemname){
+		
+		OrderItem oi = new OrderItem(itemname,items.get(itemname));
+		
+		if (isOrderEmpty){
+			Order newOrder = new Order();	
+			isOrderEmpty=false;
+			newOrder.orderitems.add(oi);
+			oidata.addElement(oi);
+			
+		}
+		else {
+			Order currentOrder = orders.get(orders.size()-1);
+			if(currentOrder.orderitems.contains(oi)){
+				
+			}
+			else {
+				currentOrder.orderitems.add(oi);
+				oidata.addElement(oi);
+			}
+		}	
+		
+	}
+	
+	class Order{
+		ArrayList<OrderItem> orderitems = new ArrayList<OrderItem>();
+		
+//		double amountsTendered=0.0;
+//		double totalDue=total()-amountsTendered;
+//		double couponamount;
+//		double tax;		
+//		double totaldue;
+		
+		Order() {
+			orders.add(this);
+		}
+		
+		public double getSubtotal(){
+			double subtotal=0.0;
+			for (OrderItem oi: orderitems){
+				subtotal += oi.quantity*oi.unitprice;
+			}
+			return subtotal;
+			
+		}
+		
+		public double tax(){
+			return taxRate*getSubtotal();
+		}
+		
+		public double total(){
+			return getSubtotal()+tax();
+		}
+		
+		
+		
+	}
+	
+	class Customer {
+		
+	}
+	
+	class OrderItem {
+		String name;
+		double unitprice;
+		int quantity;
+		
+		OrderItem (String name, Double price){
+			this.name= name;
+			this.unitprice = price;
+			this.quantity = 1;
+		}
+		
+		
+		public String toString(){
+			return name + "     \t" + quantity + "    \t" + unitprice+ "     \t" + unitprice*quantity;
+		}
+	}
+	
+	class Item {
+		private String name;
+		private Double price;
+		public Double getPrice() {
+			return price;
+		}
+		public void setPrice(Double price) {
+			this.price = price;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
 	}
 }
