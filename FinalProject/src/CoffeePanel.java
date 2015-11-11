@@ -328,6 +328,8 @@ public class CoffeePanel extends JFrame {
 	
 	class Customer {
 		
+		String name;
+		
 	}
 	
 	class OrderItem {
