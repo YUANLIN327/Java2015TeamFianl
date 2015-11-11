@@ -329,7 +329,7 @@ public class CoffeePanel extends JFrame {
 	class Customer {
 		
 		String name;
-		
+		long pointcardnumber;
 	}
 	
 	class OrderItem {
