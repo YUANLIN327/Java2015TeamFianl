@@ -21,14 +21,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.Icon;
+import java.awt.Color;
 
 public class CoffeePOS extends JFrame {
 
 	private JPanel contentPane;
-	BufferedImage buttonIcon1 = ImageIO.read(new File("coffee1.jpg"));	
-	BufferedImage buttonIcon2 = ImageIO.read(new File("coffee2.jpg"));
-	BufferedImage buttonIcon3 = ImageIO.read(new File("Drip.png"));
-	BufferedImage btnIconBack = ImageIO.read(new File("back.png"));
+	BufferedImage buttonIcon1 = ImageIO.read(new File("TeaButton.jpg"));	
+	BufferedImage buttonIcon2 = ImageIO.read(new File("LatteButton.jpg"));
+	BufferedImage buttonIcon3 = ImageIO.read(new File("DripCoffeeButton.jpg"));
+	BufferedImage buttonIcon4 = ImageIO.read(new File("FrappuccinoButton.jpg"));
+	BufferedImage btnIconBack = ImageIO.read(new File("BackIcon.png"));
 	CardLayout c1 = new CardLayout();
 	DefaultListModel<OrderItem> oidata = new DefaultListModel();
 	JList itemlist = new JList(oidata);
@@ -41,7 +43,6 @@ public class CoffeePOS extends JFrame {
 	ArrayList<Order> orders = new ArrayList<Order>();
 	
 	HashMap<String, Double> items = new HashMap<String, Double>();
-	private JTextField textField_2;
 	private JTextField textField_3;
 	
 	
@@ -81,7 +82,7 @@ public class CoffeePOS extends JFrame {
 		
 		JPanel pnlMenu = new JPanel();
 		pnlMenu.setLayout(null);
-		pnlMenu.setBackground(UIManager.getColor("textHighlight"));		
+		pnlMenu.setBackground(new Color(51, 102, 153));		
 		pnlContainer.add(pnlMenu,"Menu");		
 		
 		JPanel pnlCheckout = new JPanel();
@@ -139,15 +140,6 @@ public class CoffeePOS extends JFrame {
 		
 		pnlCheckout.add(btnBack);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(210, 315, 137, 26);
-		pnlCheckout.add(textField_2);
-		textField_2.setColumns(10);
-		
-		JLabel lblPaymentStatus = new JLabel("Payment Status:");
-		lblPaymentStatus.setBounds(93, 320, 105, 16);
-		pnlCheckout.add(lblPaymentStatus);
-		
 		JLabel label_1 = new JLabel("Amount Tendered: ");
 		label_1.setBounds(75, 61, 120, 14);
 		pnlCheckout.add(label_1);
@@ -162,9 +154,10 @@ public class CoffeePOS extends JFrame {
 		
 		
 		
-		JButton btnIcedCoffee = new JButton(new ImageIcon(buttonIcon1));
-		btnIcedCoffee.setText("Iced Coffee");
-		btnIcedCoffee.addActionListener(new ActionListener() {
+		JButton btnTea = new JButton(new ImageIcon(buttonIcon1));
+		btnTea.setBackground(new Color(0, 51, 51));
+		btnTea.setText("Tea");
+		btnTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JButton b =(JButton) e.getSource();
 				addOrderItem(b.getText());
@@ -172,28 +165,33 @@ public class CoffeePOS extends JFrame {
 				System.out.println(items.get(b.getText()));
 			}
 		});		
-		btnIcedCoffee.setBounds(27, 24, 105, 68);
-		pnlMenu.add(btnIcedCoffee);
+		btnTea.setBounds(0, 0, 134, 110);
+		pnlMenu.add(btnTea);
 		JButton btnLatte = new JButton(new ImageIcon(buttonIcon2));
 		btnLatte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnLatte.setText("Latte");
-		btnLatte.setBounds(210, 24, 105, 68);
+		btnLatte.setBounds(0, 317, 134, 110);
 		pnlMenu.add(btnLatte);
 		
-		JButton btnFrappuccino = new JButton("Frappuccino");
-		btnFrappuccino.setBounds(210, 104, 105, 68);
+		JButton btnFrappuccino = new JButton(new ImageIcon(buttonIcon4));
+		btnFrappuccino.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnFrappuccino.setText("Frappuccino");
+		btnFrappuccino.setBounds(0, 213, 135, 107);
 		pnlMenu.add(btnFrappuccino);
 		
 		JButton btnBlackTea = new JButton("Black Tea");
 		btnBlackTea.setBounds(27, 184, 105, 68);
-		pnlMenu.add(btnBlackTea);
+//		pnlMenu.add(btnBlackTea);
 		
 		JButton btnChai = new JButton("Chai");
 		btnChai.setBounds(210, 184, 105, 68);
-		pnlMenu.add(btnChai);
+//		pnlMenu.add(btnChai);
 		
 		JButton btnDripCoffee = new JButton(new ImageIcon(buttonIcon3));
 		btnDripCoffee.addActionListener(new ActionListener() {
@@ -201,7 +199,7 @@ public class CoffeePOS extends JFrame {
 			}
 		});
 		btnDripCoffee.setText("Drip Coffee");
-		btnDripCoffee.setBounds(27, 104, 105, 68);
+		btnDripCoffee.setBounds(0, 105, 134, 110);
 		pnlMenu.add(btnDripCoffee);
 		
 		
@@ -286,7 +284,7 @@ public class CoffeePOS extends JFrame {
 		contentPane.add(lblOrder);
 		
 		
-		items.put("Iced Coffee",2.5d);
+		items.put("Tea",2.5d);
 		items.put("Hot Coffee",3.5d);
 		items.put("Mocha",4.5d);
 		items.put("Frappuccino",5.5d);
