@@ -327,10 +327,10 @@ public class CoffeePOS extends JFrame {
 		label_10.setBounds(143, 474, 46, 14);
 		contentPane.add(label_10);
 		
-		JLabel lblCustomer = new JLabel("Customer: ");
+		JLabel lblCustomer = new JLabel("Quantity");
 		lblCustomer.setForeground(new Color(0, 0, 0));
-		lblCustomer.setFont(new Font("Georgia", Font.PLAIN, 13));
-		lblCustomer.setBounds(125, 52, 69, 14);
+		lblCustomer.setFont(new Font("Georgia", Font.PLAIN, 12));
+		lblCustomer.setBounds(111, 53, 69, 14);
 		contentPane.add(lblCustomer);
 		
 		JLabel lblNewLabel_2 = new JLabel("Menu");
@@ -339,11 +339,23 @@ public class CoffeePOS extends JFrame {
 		lblNewLabel_2.setBounds(363, 52, 46, 14);
 		contentPane.add(lblNewLabel_2);
 		
-		JLabel lblOrder = new JLabel("Order");
+		JLabel lblOrder = new JLabel("Name");
 		lblOrder.setForeground(new Color(0, 0, 0));
-		lblOrder.setFont(new Font("Georgia", Font.PLAIN, 16));
-		lblOrder.setBounds(40, 50, 61, 16);
+		lblOrder.setFont(new Font("Georgia", Font.PLAIN, 12));
+		lblOrder.setBounds(36, 52, 61, 16);
 		contentPane.add(lblOrder);
+		
+		JLabel lblUnitprice = new JLabel("UnitPrice");
+		lblUnitprice.setForeground(Color.BLACK);
+		lblUnitprice.setFont(new Font("Georgia", Font.PLAIN, 12));
+		lblUnitprice.setBounds(206, 54, 69, 14);
+		contentPane.add(lblUnitprice);
+		
+		JLabel lblTotal_1 = new JLabel("Total");
+		lblTotal_1.setForeground(Color.BLACK);
+		lblTotal_1.setFont(new Font("Georgia", Font.PLAIN, 12));
+		lblTotal_1.setBounds(296, 54, 69, 14);
+		contentPane.add(lblTotal_1);
 		
 		
 		items.put("Black Tea",2.5d);
@@ -447,8 +459,8 @@ public class CoffeePOS extends JFrame {
 		
 		public String toString(){
 			
-			return String.format("%-30s", name)+ String.format("%-15s", quantity) + 
-					String.format("%-15s", unitprice)+String.format("%-15s", quantity*unitprice);
+			return String.format("%-30s", name)+ String.format("%-27s", quantity) + 
+					String.format("%-18s", unitprice)+String.format("%-15s", quantity*unitprice);
 		}
 	}
 	
