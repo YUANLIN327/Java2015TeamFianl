@@ -37,9 +37,13 @@ public class CoffeePOS extends JFrame {
 	BufferedImage buttonIcon9 = ImageIO.read(new File("VanillaCoffeeButton.jpg"));
 	BufferedImage buttonIcon10 = ImageIO.read(new File("PumpkinCoffeeButton.jpg"));
 	BufferedImage btnIconBack = ImageIO.read(new File("BackIcon.png"));
+	
+	//initate card layout field instance
 	CardLayout c1 = new CardLayout();
 	CardLayout cmenu = new CardLayout();
 	DefaultListModel<OrderItem> oidata = new DefaultListModel();
+	
+	
 	JList itemlist = new JList(oidata);
 	private JTextField txtAmountDue;
 	private JTextField textField_1;
@@ -67,6 +71,7 @@ public class CoffeePOS extends JFrame {
 					CoffeePOS frame = new CoffeePOS();
 					frame.setVisible(true);
 					frame.setSize(800,600);
+					frame.setTitle("iCoffee Shop");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -85,19 +90,25 @@ public class CoffeePOS extends JFrame {
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		
+		//add container panel for menu and check out		
 		JPanel pnlContainer = new JPanel();
 		pnlContainer.setBounds(361, 70, 387, 428);
+		//apply the card layout 
 		pnlContainer.setLayout(c1);
 		contentPane.add(pnlContainer);
 		
+		//add menu panel
 		JPanel pnlMenu = new JPanel();
 		pnlMenu.setLayout(null);
-		pnlMenu.setBackground(new Color(51, 102, 153));		
+		pnlMenu.setBackground(new Color(51, 102, 153));	
+		//add menu panel to container panel
 		pnlContainer.add(pnlMenu,"Menu");		
 		
+		//add checkout panel
 		JPanel pnlCheckout = new JPanel();
 		pnlCheckout.setLayout(null);
 		pnlCheckout.setBackground(SystemColor.window);
+		//add checkout panel to container panel
 		pnlContainer.add(pnlCheckout, "Checkout");
 		
 		txtAmountDue = new JTextField();
@@ -288,11 +299,13 @@ public class CoffeePOS extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int sel = itemlist.getSelectedIndex();
 				if (sel>-1){
+					Order currorder = orders.get(orders.size()-1);
 					OrderItem curroi = (OrderItem)itemlist.getSelectedValue();
 					String newprice$ = JOptionPane.showInputDialog("Please enter the new price");
 					curroi.unitprice = Double.parseDouble(newprice$);
 					oidata.remove(sel);
-					oidata.insertElementAt(curroi, sel);					
+					oidata.insertElementAt(curroi, sel);	
+					updatepricelabel(currorder);
 							
 				}
 				else {
@@ -425,9 +438,7 @@ public class CoffeePOS extends JFrame {
 			isOrderEmpty=false;
 			newOrder.orderitems.add(oi);
 			oidata.addElement(oi);
-			lblSubTotal.setText("$"+newOrder.getSubtotal());
-			lblTax.setText("$"+newOrder.getTax());
-			lblTotal.setText("$"+newOrder.getTotal());
+			updatepricelabel(newOrder);
 			
 			
 		}
@@ -439,12 +450,16 @@ public class CoffeePOS extends JFrame {
 			else {
 				currOrder.orderitems.add(oi);
 				oidata.addElement(oi);
-				lblSubTotal.setText("$"+currOrder.getSubtotal());
-				lblTax.setText("$"+currOrder.getTax());
-				lblTotal.setText("$"+currOrder.getTotal());
+				updatepricelabel(currOrder);
 			}
 		}	
 		
+	}
+
+	private void updatepricelabel(Order currOrder) {
+		lblSubTotal.setText("$"+currOrder.getSubtotal());
+		lblTax.setText("$"+currOrder.getTax());
+		lblTotal.setText("$"+currOrder.getTotal());
 	}
 	
 	class Order{
