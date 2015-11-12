@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -285,6 +286,18 @@ public class CoffeePOS extends JFrame {
 		JButton btnOverridePrice = new JButton("Override Price");
 		btnOverridePrice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int sel = itemlist.getSelectedIndex();
+				if (sel>-1){
+					OrderItem curroi = (OrderItem)itemlist.getSelectedValue();
+					String newprice$ = JOptionPane.showInputDialog("Please enter the new price");
+					curroi.unitprice = Double.parseDouble(newprice$);
+					oidata.remove(sel);
+					oidata.insertElementAt(curroi, sel);					
+							
+				}
+				else {
+					
+				}
 			
 			}
 		});
@@ -476,7 +489,9 @@ public class CoffeePOS extends JFrame {
 		String name;
 		double unitprice;
 		int quantity;
-		
+		OrderItem(){
+			
+		}
 		OrderItem (String name, Double price){
 			this.name= name;
 			this.unitprice = price;
