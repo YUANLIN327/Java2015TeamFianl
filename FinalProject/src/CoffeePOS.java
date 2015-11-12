@@ -40,6 +40,10 @@ public class CoffeePOS extends JFrame {
 	private static final double taxRate=0.0825;
 	boolean isOrderEmpty = true;
 	
+	JLabel lblSubTotal;
+	JLabel lblTax;
+	JLabel lblTotal;
+	
 	
 	ArrayList<Order> orders = new ArrayList<Order>();	
 	HashMap<String, Double> items = new HashMap<String, Double>();
@@ -260,15 +264,20 @@ public class CoffeePOS extends JFrame {
 		
 		
 		JButton btnNewButton = new JButton("Cancel");
-		btnNewButton.setBounds(36, 329, 84, 33);
+		btnNewButton.setBounds(38, 361, 84, 33);
 		contentPane.add(btnNewButton);
 		
 		JButton btnEdit = new JButton("Edit Amount");
-		btnEdit.setBounds(258, 329, 91, 33);
+		btnEdit.setBounds(260, 361, 91, 33);
 		contentPane.add(btnEdit);
 		
 		JButton btnOverridePrice = new JButton("Override Price");
-		btnOverridePrice.setBounds(125, 329, 125, 33);
+		btnOverridePrice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+			}
+		});
+		btnOverridePrice.setBounds(127, 361, 125, 33);
 		contentPane.add(btnOverridePrice);
 		
 		JButton btnSubmitOrder = new JButton("Submit Order");
@@ -288,7 +297,7 @@ public class CoffeePOS extends JFrame {
 		contentPane.add(btnSubmitOrder);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 70, 315, 252);
+		scrollPane.setBounds(36, 70, 315, 280);
 		contentPane.add(scrollPane);
 		itemlist.setFont(new Font("Courier New", Font.PLAIN, 12));
 		
@@ -296,44 +305,36 @@ public class CoffeePOS extends JFrame {
 		scrollPane.setViewportView(itemlist);
 		
 		JLabel lblNewLabel = new JLabel("Sub Total:");
-		lblNewLabel.setBounds(46, 399, 63, 14);
+		lblNewLabel.setBounds(48, 430, 63, 14);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblSubTotal = new JLabel("$0.00");
-		lblSubTotal.setBounds(143, 399, 46, 14);
+		lblSubTotal = new JLabel("$0.00");
+		lblSubTotal.setBounds(145, 430, 46, 14);
 		contentPane.add(lblSubTotal);
 		
 		JLabel labeldiscount = new JLabel("Discount:");
-		labeldiscount.setBounds(46, 374, 74, 14);
+		labeldiscount.setBounds(48, 405, 74, 14);
 		contentPane.add(labeldiscount);
 		
 		JLabel lblDiscount = new JLabel("$0.00");
-		lblDiscount.setBounds(143, 374, 46, 14);
+		lblDiscount.setBounds(145, 405, 46, 14);
 		contentPane.add(lblDiscount);
 		
-		JLabel lblTotal = new JLabel("Total: ");
-		lblTotal.setBounds(46, 449, 85, 14);
+		JLabel label_Toal = new JLabel("Total: ");
+		label_Toal.setBounds(48, 480, 85, 14);
+		contentPane.add(label_Toal);
+		
+		 lblTotal = new JLabel("$0.00");
+		lblTotal.setBounds(145, 480, 46, 14);
 		contentPane.add(lblTotal);
 		
-		JLabel label_6 = new JLabel("$0.00");
-		label_6.setBounds(143, 449, 46, 14);
-		contentPane.add(label_6);
-		
 		JLabel label_Tax = new JLabel("Tax: ");
-		label_Tax.setBounds(46, 424, 85, 14);
+		label_Tax.setBounds(48, 455, 85, 14);
 		contentPane.add(label_Tax);
 		
-		JLabel lblTax = new JLabel("$0.00");
-		lblTax.setBounds(143, 424, 46, 14);
+		lblTax = new JLabel("$0.00");
+		lblTax.setBounds(145, 455, 46, 14);
 		contentPane.add(lblTax);
-		
-		JLabel lblBalanceDue = new JLabel("Balance Due: ");
-		lblBalanceDue.setBounds(46, 474, 85, 14);
-		contentPane.add(lblBalanceDue);
-		
-		JLabel label_10 = new JLabel("$0.00");
-		label_10.setBounds(143, 474, 46, 14);
-		contentPane.add(label_10);
 		
 		JLabel lblCustomer = new JLabel("Quantity");
 		lblCustomer.setForeground(new Color(0, 0, 0));
@@ -400,16 +401,23 @@ public class CoffeePOS extends JFrame {
 			isOrderEmpty=false;
 			newOrder.orderitems.add(oi);
 			oidata.addElement(oi);
+			lblSubTotal.setText("$"+newOrder.getSubtotal());
+			lblTax.setText("$"+newOrder.getTax());
+			lblTotal.setText("$"+newOrder.getTotal());
+			
 			
 		}
 		else {
-			Order currentOrder = orders.get(orders.size()-1);
-			if(currentOrder.orderitems.contains(oi)){
+			Order currOrder = orders.get(orders.size()-1);
+			if(currOrder.orderitems.contains(oi)){
 				
 			}
 			else {
-				currentOrder.orderitems.add(oi);
+				currOrder.orderitems.add(oi);
 				oidata.addElement(oi);
+				lblSubTotal.setText("$"+currOrder.getSubtotal());
+				lblTax.setText("$"+currOrder.getTax());
+				lblTotal.setText("$"+currOrder.getTotal());
 			}
 		}	
 		
