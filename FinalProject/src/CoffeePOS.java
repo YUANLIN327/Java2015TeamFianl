@@ -205,16 +205,36 @@ public class CoffeePOS extends JFrame {
 		JButton btnBalckTea = new JButton("Black Tea");
 		btnBalckTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
 			}
 		});
 		btnBalckTea.setBounds(26, 33, 117, 83);
 		teaMenu.add(btnBalckTea);
 		
 		JButton btnChaiTea = new JButton("Chai Tea");
+		btnChaiTea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnChaiTea.setBounds(26, 138, 117, 83);
 		teaMenu.add(btnChaiTea);
 		
 		JButton btnHerbalTea = new JButton("Herbal Tea");
+		btnHerbalTea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnHerbalTea.setBounds(26, 245, 117, 83);
 		teaMenu.add(btnHerbalTea);
 		cmenu.show(categoryContainer, "Tea");
@@ -326,7 +346,9 @@ public class CoffeePOS extends JFrame {
 		contentPane.add(lblOrder);
 		
 		
-		items.put("Tea",2.5d);
+		items.put("Black Tea",2.5d);
+		items.put("Chai Tea",2.75d);
+		items.put("Herbal Tea",2.1d);
 		items.put("Hot Coffee",3.5d);
 		items.put("Mocha",4.5d);
 		items.put("Frappuccino",5.5d);
@@ -336,10 +358,7 @@ public class CoffeePOS extends JFrame {
 		
 		btnTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				JButton b =(JButton) e.getSource();
-//				addOrderItem(b.getText());
-//				System.out.println(b.getText());
-//				System.out.println(items.get(b.getText()));
+
 				cmenu.show(categoryContainer, "Tea");
 			}
 		});	
@@ -427,7 +446,9 @@ public class CoffeePOS extends JFrame {
 		
 		
 		public String toString(){
-			return name + "     \t" + quantity + "    \t" + unitprice+ "     \t" + unitprice*quantity;
+			
+			return String.format("%-30s", name)+ String.format("%-15s", quantity) + 
+					String.format("%-15s", unitprice)+String.format("%-15s", quantity*unitprice);
 		}
 	}
 	
