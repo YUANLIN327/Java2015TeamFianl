@@ -34,6 +34,9 @@ public class CoffeePOS extends JFrame {
 	BufferedImage buttonIcon5 = ImageIO.read(new File("BlackTeaButton.jpg"));
 	BufferedImage buttonIcon6 = ImageIO.read(new File("ChaiTeaButton.jpg"));
 	BufferedImage buttonIcon7 = ImageIO.read(new File("HerbalTeaButton.jpg"));
+	BufferedImage buttonIcon8 = ImageIO.read(new File("RegularCoffeeButton.jpg"));
+	BufferedImage buttonIcon9 = ImageIO.read(new File("VanillaCoffeeButton.jpg"));
+	BufferedImage buttonIcon10 = ImageIO.read(new File("PumpkinCoffeeButton.jpg"));
 	BufferedImage btnIconBack = ImageIO.read(new File("BackIcon.png"));
 	CardLayout c1 = new CardLayout();
 	CardLayout cmenu = new CardLayout();
@@ -252,17 +255,20 @@ public class CoffeePOS extends JFrame {
 		dripcoffeeMenu.setLayout(null);
 		categoryContainer.add(dripcoffeeMenu,"Drip Coffee");
 		
-		JButton btnCoffee = new JButton("Coffee1");
-		btnCoffee.setBounds(26, 30, 117, 83);
-		dripcoffeeMenu.add(btnCoffee);
+		JButton btnRegularCoffee = new JButton(new ImageIcon(buttonIcon8));
+		btnRegularCoffee.setText("Regular Coffee");
+		btnRegularCoffee.setBounds(26, 30, 123, 101);
+		dripcoffeeMenu.add(btnRegularCoffee);
 		
-		JButton btnCoffee_1 = new JButton("Coffee2");
-		btnCoffee_1.setBounds(26, 135, 117, 83);
-		dripcoffeeMenu.add(btnCoffee_1);
+		JButton btnVanillaCoffee = new JButton(new ImageIcon(buttonIcon9));
+		btnVanillaCoffee.setText("Vanilla Coffee");
+		btnVanillaCoffee.setBounds(26, 135, 123, 101);
+		dripcoffeeMenu.add(btnVanillaCoffee);
 		
-		JButton btnCoffee_2 = new JButton("Coffee3");
-		btnCoffee_2.setBounds(26, 242, 117, 83);
-		dripcoffeeMenu.add(btnCoffee_2);
+		JButton btnPumpkinCoffee = new JButton(new ImageIcon(buttonIcon10));
+		btnPumpkinCoffee.setText("Pumpkin Coffee");
+		btnPumpkinCoffee.setBounds(26, 242, 123, 101);
+		dripcoffeeMenu.add(btnPumpkinCoffee);
 		
 		
 		JButton btnNewButton = new JButton("Cancel");
