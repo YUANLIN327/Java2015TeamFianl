@@ -296,7 +296,7 @@ public class CoffeePOS extends JFrame {
 							
 				}
 				else {
-					
+					JOptionPane.showMessageDialog(null, "Please select an item");
 				}
 			
 			}
