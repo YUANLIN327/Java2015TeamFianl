@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -30,6 +29,12 @@ public class CoffeePOS extends JFrame {
 	BufferedImage buttonIcon2 = ImageIO.read(new File("LatteButton.jpg"));
 	BufferedImage buttonIcon3 = ImageIO.read(new File("DripCoffeeButton.jpg"));
 	BufferedImage buttonIcon4 = ImageIO.read(new File("FrappuccinoButton.jpg"));
+	BufferedImage buttonIcon5 = ImageIO.read(new File("BlackTeaButton.jpg"));
+	BufferedImage buttonIcon6 = ImageIO.read(new File("ChaiTeaButton.jpg"));
+	BufferedImage buttonIcon7 = ImageIO.read(new File("HerbalTeaButton.jpg"));
+	BufferedImage buttonIcon8 = ImageIO.read(new File("RegularCoffeeButton.jpg"));
+	BufferedImage buttonIcon9 = ImageIO.read(new File("VanillaCoffeeButton.jpg"));
+	BufferedImage buttonIcon10 = ImageIO.read(new File("PumpkinCoffeeButton.jpg"));
 	BufferedImage btnIconBack = ImageIO.read(new File("BackIcon.png"));
 	CardLayout c1 = new CardLayout();
 	CardLayout cmenu = new CardLayout();
@@ -160,7 +165,7 @@ public class CoffeePOS extends JFrame {
 		JButton btnTea = new JButton(new ImageIcon(buttonIcon1));
 		btnTea.setBackground(new Color(0, 51, 51));
 		btnTea.setText("Tea");	
-		btnTea.setBounds(0, 0, 134, 110);
+		btnTea.setBounds(0, 0, 133, 110);
 		pnlMenu.add(btnTea);
 		
 		JButton btnLatte = new JButton(new ImageIcon(buttonIcon2));
@@ -178,11 +183,12 @@ public class CoffeePOS extends JFrame {
 			}
 		});
 		btnFrappuccino.setText("Frappuccino");
-		btnFrappuccino.setBounds(0, 213, 135, 107);
+		btnFrappuccino.setBounds(0, 213, 134, 107);
 		pnlMenu.add(btnFrappuccino);
 		
-		JButton btnBlackTea = new JButton("Black Tea");
-		btnBlackTea.setBounds(27, 184, 105, 68);
+		JButton btnBlackTea = new JButton(new ImageIcon(buttonIcon5));
+		btnBlackTea.setText("Black Tea");
+		btnBlackTea.setBounds(26, 33, 117, 95);
 //		pnlMenu.add(btnBlackTea);
 		
 		JButton btnChai = new JButton("Chai");
@@ -206,8 +212,8 @@ public class CoffeePOS extends JFrame {
 		teaMenu.setLayout(null);
 		categoryContainer.add(teaMenu,"Tea");
 		
-		JButton btnBalckTea = new JButton("Black Tea");
-		btnBalckTea.addActionListener(new ActionListener() {
+//		JButton btnBlackTea1 = new JButton("Black Tea");
+		btnBlackTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JButton b =(JButton) e.getSource();
 				addOrderItem(b.getText());
@@ -215,10 +221,11 @@ public class CoffeePOS extends JFrame {
 				System.out.println(items.get(b.getText()));
 			}
 		});
-		btnBalckTea.setBounds(26, 33, 117, 83);
-		teaMenu.add(btnBalckTea);
+		btnBlackTea.setBounds(26, 33, 117, 101);
+		teaMenu.add(btnBlackTea);
 		
-		JButton btnChaiTea = new JButton("Chai Tea");
+		JButton btnChaiTea = new JButton(new ImageIcon(buttonIcon6));
+		btnChaiTea.setText("Chai Tea");
 		btnChaiTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JButton b =(JButton) e.getSource();
@@ -227,10 +234,11 @@ public class CoffeePOS extends JFrame {
 				System.out.println(items.get(b.getText()));
 			}
 		});
-		btnChaiTea.setBounds(26, 138, 117, 83);
+		btnChaiTea.setBounds(26, 138, 117, 101);
 		teaMenu.add(btnChaiTea);
 		
-		JButton btnHerbalTea = new JButton("Herbal Tea");
+		JButton btnHerbalTea = new JButton(new ImageIcon(buttonIcon7));
+		btnHerbalTea.setText("Herbal Tea");
 		btnHerbalTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JButton b =(JButton) e.getSource();
@@ -239,7 +247,7 @@ public class CoffeePOS extends JFrame {
 				System.out.println(items.get(b.getText()));
 			}
 		});
-		btnHerbalTea.setBounds(26, 245, 117, 83);
+		btnHerbalTea.setBounds(26, 245, 117, 101);
 		teaMenu.add(btnHerbalTea);
 		cmenu.show(categoryContainer, "Tea");
 		
@@ -250,17 +258,20 @@ public class CoffeePOS extends JFrame {
 		dripcoffeeMenu.setLayout(null);
 		categoryContainer.add(dripcoffeeMenu,"Drip Coffee");
 		
-		JButton btnCoffee = new JButton("Coffee1");
-		btnCoffee.setBounds(21, 30, 117, 83);
-		dripcoffeeMenu.add(btnCoffee);
+		JButton btnRegularCoffee = new JButton(new ImageIcon(buttonIcon8));
+		btnRegularCoffee.setText("Regular Coffee");
+		btnRegularCoffee.setBounds(26, 30, 123, 101);
+		dripcoffeeMenu.add(btnRegularCoffee);
 		
-		JButton btnCoffee_1 = new JButton("Coffee2");
-		btnCoffee_1.setBounds(21, 135, 117, 83);
-		dripcoffeeMenu.add(btnCoffee_1);
+		JButton btnVanillaCoffee = new JButton(new ImageIcon(buttonIcon9));
+		btnVanillaCoffee.setText("Vanilla Coffee");
+		btnVanillaCoffee.setBounds(26, 135, 123, 101);
+		dripcoffeeMenu.add(btnVanillaCoffee);
 		
-		JButton btnCoffee_2 = new JButton("Coffee3");
-		btnCoffee_2.setBounds(21, 242, 117, 83);
-		dripcoffeeMenu.add(btnCoffee_2);
+		JButton btnPumpkinCoffee = new JButton(new ImageIcon(buttonIcon10));
+		btnPumpkinCoffee.setText("Pumpkin Coffee");
+		btnPumpkinCoffee.setBounds(26, 242, 123, 101);
+		dripcoffeeMenu.add(btnPumpkinCoffee);
 		
 		
 		JButton btnNewButton = new JButton("Cancel");
