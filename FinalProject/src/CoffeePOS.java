@@ -1,5 +1,7 @@
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,10 +21,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.Icon;
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class CoffeePOS extends JFrame {
 
@@ -42,7 +41,7 @@ public class CoffeePOS extends JFrame {
 	CardLayout cmenu = new CardLayout();
 	DefaultListModel<OrderItem> oidata = new DefaultListModel();
 	JList itemlist = new JList(oidata);
-	private JTextField textField;
+	private JTextField txtAmountDue;
 	private JTextField textField_1;
 	private static final double taxRate=0.0825;
 	boolean isOrderEmpty = true;
@@ -97,10 +96,11 @@ public class CoffeePOS extends JFrame {
 		pnlCheckout.setBackground(SystemColor.window);
 		pnlContainer.add(pnlCheckout, "Checkout");
 		
-		textField = new JTextField();
-		textField.setBounds(200, 19, 81, 31);
-		pnlCheckout.add(textField);
-		textField.setColumns(10);
+		txtAmountDue = new JTextField();
+		txtAmountDue.setBounds(200, 19, 81, 31);
+		pnlCheckout.add(txtAmountDue);
+		txtAmountDue.setColumns(10);
+		txtAmountDue.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
@@ -286,7 +286,14 @@ public class CoffeePOS extends JFrame {
 		JButton btnSubmitOrder = new JButton("Submit Order");
 		btnSubmitOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				c1.show(pnlContainer, "Checkout");
+				if (!isOrderEmpty){
+					c1.show(pnlContainer, "Checkout");
+					Order currOrder = orders.get(orders.size()-1);
+					txtAmountDue.setText(""+currOrder.getTotal());
+				}
+				else {
+					
+				}
 			}
 		});
 		btnSubmitOrder.setBounds(218, 449, 126, 49);
@@ -295,6 +302,7 @@ public class CoffeePOS extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(36, 70, 315, 252);
 		contentPane.add(scrollPane);
+		itemlist.setFont(new Font("Courier New", Font.PLAIN, 12));
 		
 		
 		scrollPane.setViewportView(itemlist);
@@ -303,17 +311,17 @@ public class CoffeePOS extends JFrame {
 		lblNewLabel.setBounds(46, 399, 63, 14);
 		contentPane.add(lblNewLabel);
 		
-		JLabel label = new JLabel("$0.00");
-		label.setBounds(143, 399, 46, 14);
-		contentPane.add(label);
+		JLabel lblSubTotal = new JLabel("$0.00");
+		lblSubTotal.setBounds(143, 399, 46, 14);
+		contentPane.add(lblSubTotal);
 		
-		JLabel lblDiscount = new JLabel("Discount:");
-		lblDiscount.setBounds(46, 374, 74, 14);
+		JLabel labeldiscount = new JLabel("Discount:");
+		labeldiscount.setBounds(46, 374, 74, 14);
+		contentPane.add(labeldiscount);
+		
+		JLabel lblDiscount = new JLabel("$0.00");
+		lblDiscount.setBounds(143, 374, 46, 14);
 		contentPane.add(lblDiscount);
-		
-		JLabel label_2 = new JLabel("$0.00");
-		label_2.setBounds(143, 374, 46, 14);
-		contentPane.add(label_2);
 		
 		JLabel lblTotal = new JLabel("Total: ");
 		lblTotal.setBounds(46, 449, 85, 14);
@@ -323,13 +331,13 @@ public class CoffeePOS extends JFrame {
 		label_6.setBounds(143, 449, 46, 14);
 		contentPane.add(label_6);
 		
-		JLabel lblTax = new JLabel("Tax: ");
-		lblTax.setBounds(46, 424, 85, 14);
-		contentPane.add(lblTax);
+		JLabel label_Tax = new JLabel("Tax: ");
+		label_Tax.setBounds(46, 424, 85, 14);
+		contentPane.add(label_Tax);
 		
-		JLabel label_8 = new JLabel("$0.00");
-		label_8.setBounds(143, 424, 46, 14);
-		contentPane.add(label_8);
+		JLabel lblTax = new JLabel("$0.00");
+		lblTax.setBounds(143, 424, 46, 14);
+		contentPane.add(lblTax);
 		
 		JLabel lblBalanceDue = new JLabel("Balance Due: ");
 		lblBalanceDue.setBounds(46, 474, 85, 14);
@@ -339,10 +347,10 @@ public class CoffeePOS extends JFrame {
 		label_10.setBounds(143, 474, 46, 14);
 		contentPane.add(label_10);
 		
-		JLabel lblCustomer = new JLabel("Customer: ");
+		JLabel lblCustomer = new JLabel("Quantity");
 		lblCustomer.setForeground(new Color(0, 0, 0));
-		lblCustomer.setFont(new Font("Georgia", Font.PLAIN, 13));
-		lblCustomer.setBounds(125, 52, 69, 14);
+		lblCustomer.setFont(new Font("Georgia", Font.PLAIN, 12));
+		lblCustomer.setBounds(111, 53, 69, 14);
 		contentPane.add(lblCustomer);
 		
 		JLabel lblNewLabel_2 = new JLabel("Menu");
@@ -351,11 +359,23 @@ public class CoffeePOS extends JFrame {
 		lblNewLabel_2.setBounds(363, 52, 46, 14);
 		contentPane.add(lblNewLabel_2);
 		
-		JLabel lblOrder = new JLabel("Order");
+		JLabel lblOrder = new JLabel("Name");
 		lblOrder.setForeground(new Color(0, 0, 0));
-		lblOrder.setFont(new Font("Georgia", Font.PLAIN, 16));
-		lblOrder.setBounds(40, 50, 61, 16);
+		lblOrder.setFont(new Font("Georgia", Font.PLAIN, 12));
+		lblOrder.setBounds(36, 52, 61, 16);
 		contentPane.add(lblOrder);
+		
+		JLabel lblUnitprice = new JLabel("UnitPrice");
+		lblUnitprice.setForeground(Color.BLACK);
+		lblUnitprice.setFont(new Font("Georgia", Font.PLAIN, 12));
+		lblUnitprice.setBounds(220, 54, 55, 14);
+		contentPane.add(lblUnitprice);
+		
+		JLabel lblTotal_1 = new JLabel("Total");
+		lblTotal_1.setForeground(Color.BLACK);
+		lblTotal_1.setFont(new Font("Georgia", Font.PLAIN, 12));
+		lblTotal_1.setBounds(319, 54, 46, 14);
+		contentPane.add(lblTotal_1);
 		
 		
 		items.put("Black Tea",2.5d);
@@ -429,12 +449,12 @@ public class CoffeePOS extends JFrame {
 			
 		}
 		
-		public double tax(){
-			return taxRate*getSubtotal();
+		public double getTax(){
+			return Math.round(taxRate*getSubtotal()*100.00)/100.0;
 		}
 		
-		public double total(){
-			return getSubtotal()+tax();
+		public double getTotal(){
+			return  Math.round((getSubtotal()+getTax())*100.0)/100.00;
 		}
 		
 		
@@ -459,8 +479,8 @@ public class CoffeePOS extends JFrame {
 		
 		public String toString(){
 			
-			return String.format("%-30s", name)+ String.format("%-15s", quantity) + 
-					String.format("%-15s", unitprice)+String.format("%-15s", quantity*unitprice);
+			return String.format("%-17s", name)+ String.format("%-10s", quantity) + 
+					String.format("%7s", unitprice)+String.format("%10s", quantity*unitprice);
 		}
 	}
 	
