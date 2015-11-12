@@ -161,7 +161,7 @@ public class CoffeePanel extends JFrame {
 		btnMocha.setBounds(27, 161, 117, 68);
 		pnlMenu.add(btnMocha);
 		
-		JButton btnFrabuchinno = new JButton("Frabuchinno");
+		JButton btnFrabuchinno = new JButton("Frappuccino");
 		btnFrabuchinno.setBounds(210, 161, 117, 68);
 		pnlMenu.add(btnFrabuchinno);
 		
@@ -262,7 +262,7 @@ public class CoffeePanel extends JFrame {
 		items.put("Ice Coffee",2.5d);
 		items.put("Hot Coffee",3.5d);
 		items.put("Mocha",4.5d);
-		items.put("Frabuchinno",5.5d);
+		items.put("Frappuccino",5.5d);
 		items.put("Black Tea",2.2d);
 		items.put("Chai",1.5d);
 
