@@ -70,7 +70,7 @@ public class CoffeePOS extends JFrame {
 				try {
 					CoffeePOS frame = new CoffeePOS();
 					frame.setVisible(true);
-					frame.setSize(800,600);
+					frame.setSize(725,544);
 					frame.setTitle("iCoffee Shop");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -85,14 +85,14 @@ public class CoffeePOS extends JFrame {
 	 */
 	public CoffeePOS() throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 774, 544);
+		setBounds(100, 100, 725, 544);
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		
 		//add container panel for menu and check out		
 		JPanel pnlContainer = new JPanel();
-		pnlContainer.setBounds(361, 70, 387, 428);
+		pnlContainer.setBounds(330, 90, 387, 428);
 		//apply the card layout 
 		pnlContainer.setLayout(c1);
 		contentPane.add(pnlContainer);
@@ -287,11 +287,11 @@ public class CoffeePOS extends JFrame {
 		
 		
 		JButton btnNewButton = new JButton("Cancel");
-		btnNewButton.setBounds(38, 361, 84, 33);
+		btnNewButton.setBounds(10, 381, 84, 33);
 		contentPane.add(btnNewButton);
 		
 		JButton btnEdit = new JButton("Edit Amount");
-		btnEdit.setBounds(260, 361, 91, 33);
+		btnEdit.setBounds(234, 381, 91, 33);
 		contentPane.add(btnEdit);
 		
 		JButton btnOverridePrice = new JButton("Override Price");
@@ -314,7 +314,7 @@ public class CoffeePOS extends JFrame {
 			
 			}
 		});
-		btnOverridePrice.setBounds(127, 361, 125, 33);
+		btnOverridePrice.setBounds(101, 381, 125, 33);
 		contentPane.add(btnOverridePrice);
 		
 		JButton btnSubmitOrder = new JButton("Submit Order");
@@ -330,11 +330,11 @@ public class CoffeePOS extends JFrame {
 				}
 			}
 		});
-		btnSubmitOrder.setBounds(218, 449, 126, 49);
+		btnSubmitOrder.setBounds(194, 469, 126, 49);
 		contentPane.add(btnSubmitOrder);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 70, 315, 280);
+		scrollPane.setBounds(10, 90, 315, 280);
 		contentPane.add(scrollPane);
 		itemlist.setFont(new Font("Courier New", Font.PLAIN, 12));
 		
@@ -342,65 +342,65 @@ public class CoffeePOS extends JFrame {
 		scrollPane.setViewportView(itemlist);
 		
 		JLabel lblNewLabel = new JLabel("Sub Total:");
-		lblNewLabel.setBounds(48, 430, 63, 14);
+		lblNewLabel.setBounds(10, 450, 63, 14);
 		contentPane.add(lblNewLabel);
 		
 		lblSubTotal = new JLabel("$0.00");
-		lblSubTotal.setBounds(145, 430, 46, 14);
+		lblSubTotal.setBounds(100, 450, 63, 14);
 		contentPane.add(lblSubTotal);
 		
 		JLabel labeldiscount = new JLabel("Discount:");
-		labeldiscount.setBounds(48, 405, 74, 14);
+		labeldiscount.setBounds(10, 425, 74, 14);
 		contentPane.add(labeldiscount);
 		
 		JLabel lblDiscount = new JLabel("$0.00");
-		lblDiscount.setBounds(145, 405, 46, 14);
+		lblDiscount.setBounds(100, 425, 63, 14);
 		contentPane.add(lblDiscount);
 		
 		JLabel label_Toal = new JLabel("Total: ");
-		label_Toal.setBounds(48, 480, 85, 14);
+		label_Toal.setBounds(10, 500, 85, 14);
 		contentPane.add(label_Toal);
 		
 		 lblTotal = new JLabel("$0.00");
-		lblTotal.setBounds(145, 480, 46, 14);
+		lblTotal.setBounds(100, 500, 61, 14);
 		contentPane.add(lblTotal);
 		
 		JLabel label_Tax = new JLabel("Tax: ");
-		label_Tax.setBounds(48, 455, 85, 14);
+		label_Tax.setBounds(10, 475, 85, 14);
 		contentPane.add(label_Tax);
 		
 		lblTax = new JLabel("$0.00");
-		lblTax.setBounds(145, 455, 46, 14);
+		lblTax.setBounds(100, 475, 61, 14);
 		contentPane.add(lblTax);
 		
 		JLabel lblCustomer = new JLabel("Quantity");
 		lblCustomer.setForeground(new Color(0, 0, 0));
-		lblCustomer.setFont(new Font("Georgia", Font.PLAIN, 12));
-		lblCustomer.setBounds(111, 53, 69, 14);
+		lblCustomer.setFont(new Font("Georgia", Font.PLAIN, 14));
+		lblCustomer.setBounds(89, 71, 69, 15);
 		contentPane.add(lblCustomer);
 		
 		JLabel lblNewLabel_2 = new JLabel("Menu");
 		lblNewLabel_2.setForeground(new Color(0, 0, 0));
 		lblNewLabel_2.setFont(new Font("Georgia", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(363, 52, 46, 14);
+		lblNewLabel_2.setBounds(506, 70, 46, 14);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblOrder = new JLabel("Name");
 		lblOrder.setForeground(new Color(0, 0, 0));
-		lblOrder.setFont(new Font("Georgia", Font.PLAIN, 12));
-		lblOrder.setBounds(36, 52, 61, 16);
+		lblOrder.setFont(new Font("Georgia", Font.PLAIN, 14));
+		lblOrder.setBounds(10, 71, 61, 16);
 		contentPane.add(lblOrder);
 		
-		JLabel lblUnitprice = new JLabel("UnitPrice");
+		JLabel lblUnitprice = new JLabel("Unit Price");
 		lblUnitprice.setForeground(Color.BLACK);
-		lblUnitprice.setFont(new Font("Georgia", Font.PLAIN, 12));
-		lblUnitprice.setBounds(220, 54, 55, 14);
+		lblUnitprice.setFont(new Font("Georgia", Font.PLAIN, 14));
+		lblUnitprice.setBounds(192, 71, 83, 14);
 		contentPane.add(lblUnitprice);
 		
 		JLabel lblTotal_1 = new JLabel("Total");
 		lblTotal_1.setForeground(Color.BLACK);
-		lblTotal_1.setFont(new Font("Georgia", Font.PLAIN, 12));
-		lblTotal_1.setBounds(319, 54, 46, 14);
+		lblTotal_1.setFont(new Font("Georgia", Font.PLAIN, 14));
+		lblTotal_1.setBounds(290, 71, 46, 14);
 		contentPane.add(lblTotal_1);
 		
 		
