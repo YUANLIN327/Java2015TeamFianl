@@ -305,6 +305,14 @@ public class CoffeePOS extends JFrame {
 		
 		JButton btnPumpkinCoffee = new JButton(new ImageIcon(buttonIcon10));
 		btnPumpkinCoffee.setText("Pumpkin Coffee");
+		btnPumpkinCoffee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnPumpkinCoffee.setBounds(0, 240, 130, 105);
 		dripcoffeeMenu.add(btnPumpkinCoffee);
 		
@@ -314,18 +322,41 @@ public class CoffeePOS extends JFrame {
 		frappuccinoMenu.setLayout(null);
 		
 		JButton btnChocolateFrap = new JButton(new ImageIcon(buttonIcon11));
-		btnChocolateFrap.setText("Chocolate");
-		btnPumpkinCoffee.setText("Chocolate Frappuccino");
+		btnChocolateFrap.setText("Chocolate Frap");
+		btnChocolateFrap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnChocolateFrap.setBounds(0, 30, 130, 105);
 		frappuccinoMenu.add(btnChocolateFrap);
 		
 		JButton btnVanillaFrap = new JButton(new ImageIcon(buttonIcon12));
-		btnVanillaFrap.setText("Vanilla Frappuccino");
+		btnVanillaFrap.setText("Vanilla Frap");
+		btnVanillaFrap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnVanillaFrap.setBounds(0, 135, 130, 105);
 		frappuccinoMenu.add(btnVanillaFrap);
 		
 		JButton btnCaramelFrap = new JButton(new ImageIcon(buttonIcon13));
-		btnCaramelFrap.setText("Caramel Frappuccino");
+		btnCaramelFrap.setText("Caramel Frap");
+		btnCaramelFrap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnCaramelFrap.setBounds(0, 240, 130, 105);
 		frappuccinoMenu.add(btnCaramelFrap);
 		
@@ -337,6 +368,10 @@ public class CoffeePOS extends JFrame {
 		btnHazelnutLatte.setText("Hazelnut Latte");
 		btnHazelnutLatte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
 			}
 		});
 		latteMenu.setLayout(null);
@@ -345,11 +380,27 @@ public class CoffeePOS extends JFrame {
 		
 		JButton btnMochaLatte = new JButton(new ImageIcon(buttonIcon15));
 		btnMochaLatte.setText("Mocha");
+		btnMochaLatte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnMochaLatte.setBounds(0, 135, 130, 105);
 		latteMenu.add(btnMochaLatte);
 		
 		JButton btnVanillaLatte = new JButton(new ImageIcon(buttonIcon16));
 		btnVanillaLatte.setText("Vanilla Latte");
+		btnVanillaLatte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnVanillaLatte.setBounds(0, 240, 130, 105);
 		latteMenu.add(btnVanillaLatte);
 		
@@ -480,9 +531,9 @@ public class CoffeePOS extends JFrame {
 		items.put("Vanilla Coffee",1.5d);
 		items.put("Pumpkin Coffee",1.6d);
 		//Frappuccino Prices
-		items.put("Chocolate Frappuccino",3.25d);
-		items.put("Vanilla Frappuccino",3.5d);
-		items.put("Caramel Frappuccino",3.6d);
+		items.put("Chocolate Frap",3.25d);
+		items.put("Vanilla Frap",3.5d);
+		items.put("Caramel Frap",3.6d);
 		//Latte Price
 		items.put("Hazelnut Latte",3.25d);
 		items.put("Mocha",3.5d);
