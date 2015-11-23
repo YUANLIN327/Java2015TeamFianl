@@ -36,7 +36,14 @@ public class CoffeePOS extends JFrame {
 	BufferedImage buttonIcon8 = ImageIO.read(new File("RegularCoffeeButton.jpg"));
 	BufferedImage buttonIcon9 = ImageIO.read(new File("VanillaCoffeeButton.jpg"));
 	BufferedImage buttonIcon10 = ImageIO.read(new File("PumpkinCoffeeButton.jpg"));
-	BufferedImage btnIconBack = ImageIO.read(new File("BackIcon.png"));
+	//Button set 2./*
+	BufferedImage buttonIcon11 = ImageIO.read(new File("ChocolateFrapButton.jpg"));
+	BufferedImage buttonIcon12 = ImageIO.read(new File("VanillaFrapButton.jpg"));
+	BufferedImage buttonIcon13 = ImageIO.read(new File("CaramelFrapButton.jpg"));
+	BufferedImage buttonIcon14 = ImageIO.read(new File("HazelnutLatteButton.jpg"));
+	BufferedImage buttonIcon15 = ImageIO.read(new File("MochaLatteButton.jpg"));
+	BufferedImage buttonIcon16 = ImageIO.read(new File("VanillaLatteButton.jpg"));
+	BufferedImage btnIconBack = ImageIO.read(new File("BackIcon.png")); 
 	
 	//initate card layout field instance
 	CardLayout c1 = new CardLayout();
@@ -271,11 +278,28 @@ public class CoffeePOS extends JFrame {
 		
 		JButton btnRegularCoffee = new JButton(new ImageIcon(buttonIcon8));
 		btnRegularCoffee.setText("Regular Coffee");
+		btnRegularCoffee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnRegularCoffee.setBounds(0, 30, 130, 105);
 		dripcoffeeMenu.add(btnRegularCoffee);
 		
+		
 		JButton btnVanillaCoffee = new JButton(new ImageIcon(buttonIcon9));
 		btnVanillaCoffee.setText("Vanilla Coffee");
+		btnVanillaCoffee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton b =(JButton) e.getSource();
+				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
+			}
+		});
 		btnVanillaCoffee.setBounds(0, 135, 130, 105);
 		dripcoffeeMenu.add(btnVanillaCoffee);
 		
@@ -283,6 +307,51 @@ public class CoffeePOS extends JFrame {
 		btnPumpkinCoffee.setText("Pumpkin Coffee");
 		btnPumpkinCoffee.setBounds(0, 240, 130, 105);
 		dripcoffeeMenu.add(btnPumpkinCoffee);
+		
+		JPanel frappuccinoMenu = new JPanel();
+		frappuccinoMenu.setBackground(new Color(52, 102, 153));
+		categoryContainer.add(frappuccinoMenu, "Frappuccino");
+		frappuccinoMenu.setLayout(null);
+		
+		JButton btnChocolateFrap = new JButton(new ImageIcon(buttonIcon11));
+		btnChocolateFrap.setText("Chocolate");
+		btnPumpkinCoffee.setText("Chocolate Frappuccino");
+		btnChocolateFrap.setBounds(0, 30, 130, 105);
+		frappuccinoMenu.add(btnChocolateFrap);
+		
+		JButton btnVanillaFrap = new JButton(new ImageIcon(buttonIcon12));
+		btnVanillaFrap.setText("Vanilla Frappuccino");
+		btnVanillaFrap.setBounds(0, 135, 130, 105);
+		frappuccinoMenu.add(btnVanillaFrap);
+		
+		JButton btnCaramelFrap = new JButton(new ImageIcon(buttonIcon13));
+		btnCaramelFrap.setText("Caramel Frappuccino");
+		btnCaramelFrap.setBounds(0, 240, 130, 105);
+		frappuccinoMenu.add(btnCaramelFrap);
+		
+		JPanel latteMenu = new JPanel();
+		latteMenu.setBackground(new Color(52, 102, 153));
+		categoryContainer.add(latteMenu, "Latte");
+		
+		JButton btnHazelnutLatte = new JButton(new ImageIcon(buttonIcon14));
+		btnHazelnutLatte.setText("Hazelnut Latte");
+		btnHazelnutLatte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		latteMenu.setLayout(null);
+		btnHazelnutLatte.setBounds(0, 30, 130, 105);
+		latteMenu.add(btnHazelnutLatte);
+		
+		JButton btnMochaLatte = new JButton(new ImageIcon(buttonIcon15));
+		btnMochaLatte.setText("Mocha");
+		btnMochaLatte.setBounds(0, 135, 130, 105);
+		latteMenu.add(btnMochaLatte);
+		
+		JButton btnVanillaLatte = new JButton(new ImageIcon(buttonIcon16));
+		btnVanillaLatte.setText("Vanilla Latte");
+		btnVanillaLatte.setBounds(0, 240, 130, 105);
+		latteMenu.add(btnVanillaLatte);
 		
 		
 		JButton btnNewButton = new JButton("Cancel");
@@ -402,15 +471,27 @@ public class CoffeePOS extends JFrame {
 		lblTotal_1.setBounds(290, 71, 46, 14);
 		contentPane.add(lblTotal_1);
 		
-		
-		items.put("Black Tea",2.5d);
-		items.put("Chai Tea",2.75d);
-		items.put("Herbal Tea",2.1d);
-		items.put("Hot Coffee",3.5d);
-		items.put("Mocha",4.5d);
-		items.put("Frappuccino",5.5d);
-		items.put("Black Tea",2.2d);
-		items.put("Chai",1.5d);
+		//Tea Prices
+		items.put("Black Tea",1.5d);
+		items.put("Chai Tea",1.75d);
+		items.put("Herbal Tea",1.25d);
+		//Coffee Prices
+		items.put("Regular Coffee",1.25d);
+		items.put("Vanilla Coffee",1.5d);
+		items.put("Pumpkin Coffee",1.6d);
+		//Frappuccino Prices
+		items.put("Chocolate Frappuccino",3.25d);
+		items.put("Vanilla Frappuccino",3.5d);
+		items.put("Caramel Frappuccino",3.6d);
+		//Latte Price
+		items.put("Hazelnut Latte",3.25d);
+		items.put("Mocha",3.5d);
+		items.put("Vanilla Latte",3.6d);
+//		items.put("Hot Coffee",3.5d);
+//		items.put("Mocha",4.5d);
+//		items.put("Frappuccino",5.5d);
+//		items.put("Black Tea",2.2d);
+//		items.put("Chai",1.5d);
 		
 		
 		btnTea.addActionListener(new ActionListener() {
@@ -423,6 +504,16 @@ public class CoffeePOS extends JFrame {
 		btnDripCoffee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cmenu.show(categoryContainer, "Drip Coffee");
+			}
+		});
+		btnFrappuccino.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cmenu.show(categoryContainer, "Frappuccino");
+			}
+		});
+		btnLatte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cmenu.show(categoryContainer, "Latte");
 			}
 		});
 
