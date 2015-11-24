@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -48,10 +50,10 @@ public class CoffeePOS extends JFrame {
 	//initate card layout field instance
 	CardLayout c1 = new CardLayout();
 	CardLayout cmenu = new CardLayout();
-	DefaultListModel<OrderItem> oidata = new DefaultListModel();
-	
-	
+	DefaultListModel<OrderItem> oidata = new DefaultListModel();	
 	JList itemlist = new JList(oidata);
+	
+	
 	private JTextField txtAmountDue;
 	private JTextField textField_1;
 	private static final double taxRate=0.0825;
@@ -406,10 +408,69 @@ public class CoffeePOS extends JFrame {
 		
 		
 		JButton btnNewButton = new JButton("Cancel");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				oidata.removeAllElements();
+				isOrderEmpty = true;
+			}
+		});
 		btnNewButton.setBounds(10, 381, 84, 33);
 		contentPane.add(btnNewButton);
 		
+		
+		//edit item quantity button
 		JButton btnEdit = new JButton("Edit Amount");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int sel = itemlist.getSelectedIndex();
+				Order currorder = orders.get(orders.size()-1);
+				OrderItem curroi = (OrderItem)itemlist.getSelectedValue();
+				
+				if (sel>-1){
+					JFrame fAmount = new JFrame();
+					JTextField tfamount = new JTextField("        "+curroi.quantity);
+					tfamount.setHorizontalAlignment(SwingConstants.RIGHT);
+					JPanel  pbuttons = new JPanel();
+					JButton btnIncrease = new JButton("Increase");
+					JButton btnDecrease = new JButton("Decrease");
+					JButton btnUpdate = new JButton("Update");
+					pbuttons.add(btnIncrease);
+					pbuttons.add(tfamount);
+					pbuttons.add(btnDecrease);
+					JLabel avgLabel = new JLabel();		
+					fAmount.setSize(240, 200);					
+					fAmount.add(btnUpdate, BorderLayout.SOUTH);			
+					fAmount.add(pbuttons,BorderLayout.CENTER);
+					fAmount.setVisible(true);
+					
+					btnIncrease.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int curramount =Integer.parseInt(tfamount.getText().trim());						
+						    tfamount.setText(""+(++curramount));
+						}
+					});
+					
+					btnDecrease.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int curramount =Integer.parseInt(tfamount.getText().trim());
+							if (curramount>0){							
+								tfamount.setText(""+(--curramount));
+							}
+						}
+					});
+					
+					btnUpdate.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							curroi.quantity=Integer.parseInt(tfamount.getText().trim());
+							oidata.remove(sel);
+							oidata.insertElementAt(curroi, sel);
+							updateitemlabel(currorder);
+						}
+					});
+						
+				}
+			}
+		});
 		btnEdit.setBounds(234, 381, 91, 33);
 		contentPane.add(btnEdit);
 		
@@ -424,7 +485,7 @@ public class CoffeePOS extends JFrame {
 					curroi.unitprice = Double.parseDouble(newprice$);
 					oidata.remove(sel);
 					oidata.insertElementAt(curroi, sel);	
-					updatepricelabel(currorder);
+					updateitemlabel(currorder);
 							
 				}
 				else {
@@ -579,7 +640,7 @@ public class CoffeePOS extends JFrame {
 			isOrderEmpty=false;
 			newOrder.orderitems.add(oi);
 			oidata.addElement(oi);
-			updatepricelabel(newOrder);
+			updateitemlabel(newOrder);
 			
 			
 		}
@@ -591,13 +652,13 @@ public class CoffeePOS extends JFrame {
 			else {
 				currOrder.orderitems.add(oi);
 				oidata.addElement(oi);
-				updatepricelabel(currOrder);
+				updateitemlabel(currOrder);
 			}
 		}	
 		
 	}
 
-	private void updatepricelabel(Order currOrder) {
+	private void updateitemlabel(Order currOrder) {
 		lblSubTotal.setText("$"+currOrder.getSubtotal());
 		lblTax.setText("$"+currOrder.getTax());
 		lblTotal.setText("$"+currOrder.getTotal());
