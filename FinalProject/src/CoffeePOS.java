@@ -27,9 +27,7 @@ import javax.swing.SwingConstants;
 
 public class CoffeePOS extends JFrame {
 
-	//Sam made the first change
-	//Claudia made a change
-	//Lin made the change
+
 	private JPanel contentPane;
 	BufferedImage buttonIcon1 = ImageIO.read(new File("TeaButton.jpg"));	
 	BufferedImage buttonIcon2 = ImageIO.read(new File("LatteButton.jpg"));
