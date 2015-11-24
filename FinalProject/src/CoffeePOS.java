@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -9,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,6 +25,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -63,13 +67,13 @@ public class CoffeePOS extends JFrame {
 	JLabel lblSubTotal;
 	JLabel lblTax;
 	JLabel lblTotal;
-	
-	
+    JFrame Reciept = new JFrame();
+    Desktop desktop = null;
 	ArrayList<Order> orders = new ArrayList<Order>();	
 	HashMap<String, Double> items = new HashMap<String, Double>();
 	private JTextField textField_3;
-	
-	
+    JTextArea ta = new JTextArea();
+    String CashAmt;
 
 	/**
 	 * Launch the application.
@@ -93,6 +97,10 @@ public class CoffeePOS extends JFrame {
 	 * Create the frame.
 	 * @throws IOException 
 	 */
+	
+    void drawLine(){
+        ta.append("------------------------------------\n");
+}
 	public CoffeePOS() throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 725, 544);
@@ -131,8 +139,57 @@ public class CoffeePOS extends JFrame {
 		textField_1.setColumns(10);
 		textField_1.setBounds(200, 87, 81, 31);
 		pnlCheckout.add(textField_1);
+		if(Desktop.isDesktopSupported())desktop=Desktop.getDesktop();
 		
 		JButton btnNewButton_1 = new JButton("Cash");
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                        //CashAmt = JOptionPane.showInputDialog("Please Enter Cash Amount: ");
+                        System.out.println(CashAmt);
+                        //Reciept nw = new Reciept();
+                        //nw.NewScreen();
+                        if (e.getSource()==btnNewButton_1){
+                                    Reciept.setSize(250, 250);
+                                    Reciept.setVisible(true);
+                                    Reciept.getContentPane().add(ta, BorderLayout.NORTH);
+                                    JButton emailBtn = new JButton("Email Reciept");
+                                    Reciept.add(emailBtn, BorderLayout.SOUTH);
+                                       emailBtn.addActionListener(new ActionListener(){
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+
+                                                String report$=ta.getText();
+                                                String mailto="Claudia_zamudio@baylor.edu?SUBJECT=Reciept [iCoffee Shoppe]&BODY=" + report$;
+
+                                                URI uri=null;
+
+                                                try{
+                                                    uri=new URI("mailto", mailto, null);
+                                                    try {
+                                                        desktop.mail(uri);
+                                                    } catch (IOException e1) {
+                                                        // TODO Auto-generated catch block
+                                                        e1.printStackTrace();
+                                                    }
+                                                }catch (URISyntaxException e1){
+                                                    e1.printStackTrace();
+
+                                                }
+                                            }
+
+                                        });
+                                    ta.setText("");
+                                    drawLine();
+                                    ta.append("\tiCoffeeShoppe\n");
+                                    ta.append("\tRECIEPT\n");
+                                    drawLine();
+                                    ta.append("Total Amount Due: " + txtAmountDue.getText() + "\n"+ "Amount Tendered: " + textField_3.getText() + "\n"+
+                                    "Change: " + textField_1.getText());
+
+                        }
+            }
+
+});
 		btnNewButton_1.setBounds(93, 207, 105, 39);
 		pnlCheckout.add(btnNewButton_1);
 		
