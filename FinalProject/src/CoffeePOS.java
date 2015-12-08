@@ -1,5 +1,7 @@
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -8,8 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -20,11 +25,13 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.Icon;
+import javax.swing.JSeparator;
 
 public class CoffeePOS extends JFrame {
+
 
 	private JPanel contentPane;
 	BufferedImage buttonIcon1 = ImageIO.read(new File("Tea.png"));	
@@ -50,13 +57,14 @@ public class CoffeePOS extends JFrame {
 	BufferedImage buttonIcon20 = ImageIO.read(new File("CaramelLatte.png")); //caramel latte
 	BufferedImage btnIconBack = ImageIO.read(new File("BackIcon.png")); 
 	
+	
 	//initate card layout field instance
 	CardLayout c1 = new CardLayout();
 	CardLayout cmenu = new CardLayout();
-	DefaultListModel<OrderItem> oidata = new DefaultListModel();
-	
-	
+	DefaultListModel<OrderItem> oidata = new DefaultListModel();	
 	JList itemlist = new JList(oidata);
+	
+	
 	private JTextField txtAmountDue;
 	private JTextField textField_1;
 	private static final double taxRate=0.0825;
@@ -65,13 +73,13 @@ public class CoffeePOS extends JFrame {
 	JLabel lblSubTotal;
 	JLabel lblTax;
 	JLabel lblTotal;
-	
-	
+    JFrame Receipt = new JFrame();
+    Desktop desktop = null;
 	ArrayList<Order> orders = new ArrayList<Order>();	
 	HashMap<String, Double> items = new HashMap<String, Double>();
 	private JTextField textField_3;
-	
-	
+    JTextArea ta = new JTextArea();
+    String CashAmt;
 
 	/**
 	 * Launch the application.
@@ -82,7 +90,7 @@ public class CoffeePOS extends JFrame {
 				try {
 					CoffeePOS frame = new CoffeePOS();
 					frame.setVisible(true);
-					frame.setSize(1100,700);
+					frame.setSize(1100,720);
 					frame.setTitle("iCoffee Shop");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -95,6 +103,10 @@ public class CoffeePOS extends JFrame {
 	 * Create the frame.
 	 * @throws IOException 
 	 */
+	
+    void drawLine(){
+        ta.append("------------------------------------\n");
+}
 	public CoffeePOS() throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1100, 700);
@@ -103,10 +115,17 @@ public class CoffeePOS extends JFrame {
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		
+		JPanel pnlRibbon = new JPanel();
+		pnlRibbon.setBounds(0, 11, 1090, 77);
+		pnlRibbon.setBackground(new Color(128, 0, 0));
+		contentPane.add(pnlRibbon);
+		
+		
+		
 		//add container panel for menu and check out		
 		JPanel pnlContainer = new JPanel();
 		pnlContainer.setBackground(new Color(100, 149, 237));
-		pnlContainer.setBounds(390, 90, 700, 607);
+		pnlContainer.setBounds(390, 90, 700, 599);
 		//apply the card layout 
 		pnlContainer.setLayout(c1);
 		contentPane.add(pnlContainer);
@@ -121,55 +140,112 @@ public class CoffeePOS extends JFrame {
 		//add checkout panel
 		JPanel pnlCheckout = new JPanel();
 		pnlCheckout.setLayout(null);
-		pnlCheckout.setBackground(SystemColor.window);
+		pnlCheckout.setBackground(new Color(210, 180, 140));
 		
 		//add checkout panel to container panel
 		pnlContainer.add(pnlCheckout, "Checkout");
 		
 		txtAmountDue = new JTextField();
-		txtAmountDue.setBounds(333, 27, 81, 31);
+		txtAmountDue.setBounds(242, 27, 172, 31);
 		pnlCheckout.add(txtAmountDue);
 		txtAmountDue.setColumns(10);
 		txtAmountDue.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		textField_1.setBounds(333, 95, 81, 31);
+		textField_1.setBounds(242, 95, 172, 31);
 		pnlCheckout.add(textField_1);
+		if(Desktop.isDesktopSupported())desktop=Desktop.getDesktop();
 		
-		JButton btnNewButton_1 = new JButton("Cash");
-		btnNewButton_1.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		btnNewButton_1.setBounds(208, 208, 105, 39);
-		pnlCheckout.add(btnNewButton_1);
+		JButton btnCash = new JButton("Cash");
+		btnCash.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		btnCash.setBounds(90, 271, 125, 51);
+        btnCash.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                        //CashAmt = JOptionPane.showInputDialog("Please Enter Cash Amount: ");
+                        System.out.println(CashAmt);
+                        //Reciept nw = new Reciept();
+                        //nw.NewScreen();
+                        if (e.getSource()==btnCash){
+                                    Receipt.setSize(250, 250);
+                                    Receipt.setVisible(true);
+                                    Receipt.getContentPane().add(ta, BorderLayout.NORTH);
+                                    JButton emailBtn = new JButton("Email Reciept");
+                                    Receipt.getContentPane().add(emailBtn, BorderLayout.SOUTH);
+                                       emailBtn.addActionListener(new ActionListener(){
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+
+                                                String report$=ta.getText();
+                                                String mailto="Claudia_zamudio@baylor.edu?SUBJECT=Reciept [iCoffee Shoppe]&BODY=" + report$;
+
+                                                URI uri=null;
+
+                                                try{
+                                                    uri=new URI("mailto", mailto, null);
+                                                    try {
+                                                        desktop.mail(uri);
+                                                    } catch (IOException e1) {
+                                                        // TODO Auto-generated catch block
+                                                        e1.printStackTrace();
+                                                    }
+                                                }catch (URISyntaxException e1){
+                                                    e1.printStackTrace();
+
+                                                }
+                                            }
+
+                                        });
+                                    ta.setText("");
+                                    drawLine();
+                                    ta.append("\tiCoffeeShoppe\n");
+                                    ta.append("\tRECIEPT\n");
+                                    drawLine();
+                                    ta.append("Total Amount Due: " + txtAmountDue.getText() + "\n"+ "Amount Tendered: " + textField_3.getText() + "\n"+
+                                    "Change: " + textField_1.getText());
+
+                        }
+            }
+
+});
+		
+		pnlCheckout.add(btnCash);
 		
 		JButton btnCheck = new JButton("Check");
 		btnCheck.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		btnCheck.setBounds(323, 208, 105, 39);
+		btnCheck.setBounds(334, 306, 105, 39);
 		pnlCheckout.add(btnCheck);
 		
 		JButton btnCoupon = new JButton("Coupon");
 		btnCoupon.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		btnCoupon.setBounds(208, 258, 105, 39);
+		btnCoupon.setBounds(114, 396, 105, 39);
 		pnlCheckout.add(btnCoupon);
+		
 		
 		JButton btnGiftCard = new JButton("Gift Card");
 		btnGiftCard.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		btnGiftCard.setBounds(323, 258, 105, 39);
+		btnGiftCard.setBounds(114, 335, 105, 39);
 		pnlCheckout.add(btnGiftCard);
 		
 		JButton btnCreditdebitCard = new JButton("Credit/Debit Card");
 		btnCreditdebitCard.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		btnCreditdebitCard.setBounds(227, 154, 172, 39);
+		btnCreditdebitCard.setBounds(242, 158, 172, 39);
+		btnCreditdebitCard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});		
 		pnlCheckout.add(btnCreditdebitCard);
 		
 		JLabel lblNewLabel_1 = new JLabel("Amount Due: ");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(207, 34, 131, 14);
+		lblNewLabel_1.setBounds(101, 44, 131, 14);
 		pnlCheckout.add(lblNewLabel_1);
 		
 		JLabel lblChange = new JLabel("Change: ");
+		lblChange.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblChange.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblChange.setBounds(244, 102, 69, 14);
+		lblChange.setBounds(163, 112, 69, 14);
 		pnlCheckout.add(lblChange);
 		
 		JButton btnBack = new JButton(new ImageIcon(btnIconBack));
@@ -185,13 +261,14 @@ public class CoffeePOS extends JFrame {
 		pnlCheckout.add(btnBack);
 		
 		JLabel label_1 = new JLabel("Amount Tendered: ");
+		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_1.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		label_1.setBounds(164, 69, 164, 14);
+		label_1.setBounds(72, 79, 164, 14);
 		pnlCheckout.add(label_1);
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(333, 61, 81, 31);
+		textField_3.setBounds(242, 61, 172, 31);
 		pnlCheckout.add(textField_3);
 		
 		c1.show(pnlContainer, "Menu");		
@@ -220,13 +297,12 @@ public class CoffeePOS extends JFrame {
 		btnFrappuccino.setText("Frappuccino");
 		btnFrappuccino.setBounds(6, 322, 180, 120);
 		pnlMenu.add(btnFrappuccino);
-		
-		JButton btnBlackTea = new JButton(new ImageIcon(buttonIcon5));
-		btnBlackTea.setBackground(Color.BLACK);
-		btnBlackTea.setText("Black Tea");
+//		btnBlackTea.setBounds(26, 30, 117, 105);
+//		pnlMenu.add(btnBlackTea);
 		
 		JButton btnChai = new JButton("Chai");
 		btnChai.setBounds(210, 184, 105, 68);
+//		pnlMenu.add(btnChai);
 		
 		JButton btnDripCoffee = new JButton(new ImageIcon(buttonIcon3));
 		btnDripCoffee.setText("Drip Coffee");
@@ -234,21 +310,24 @@ public class CoffeePOS extends JFrame {
 		pnlMenu.add(btnDripCoffee);
 		
 		JPanel categoryContainer = new JPanel();
-		categoryContainer.setBounds(192, 0, 508, 594);
+		categoryContainer.setBounds(192, 0, 508, 599);
 		categoryContainer.setBackground(new Color(30, 144, 255));
 		categoryContainer.setLayout(cmenu);
 		pnlMenu.add(categoryContainer);
+		cmenu.show(categoryContainer, "Tea");
+		
+		JButton btnBlackTea = new JButton(new ImageIcon(buttonIcon5));
+		btnBlackTea.setText("Black Tea");
 		
 		JPanel teaMenu = new JPanel();
-		teaMenu.setBounds(132, 0, 255, 428);
+		categoryContainer.add(teaMenu, "name_360819358869388");
 		teaMenu.setBackground(new Color(128, 0, 0));
 		teaMenu.setLayout(null);
-		categoryContainer.add(teaMenu,"Tea");
 		
 		btnBlackTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JButton b =(JButton) e.getSource();
-				addOrderItem(b.getText());
+				addOrderItem(b.getText());				
 			}
 		});
 		btnBlackTea.setBounds(56, 79, 180, 120);
@@ -259,7 +338,7 @@ public class CoffeePOS extends JFrame {
 		btnChaiTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JButton b =(JButton) e.getSource();
-				addOrderItem(b.getText());
+				addOrderItem(b.getText());				
 			}
 		});
 		btnChaiTea.setBounds(270, 79, 180, 120);
@@ -271,6 +350,8 @@ public class CoffeePOS extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton b =(JButton) e.getSource();
 				addOrderItem(b.getText());
+				System.out.println(b.getText());
+				System.out.println(items.get(b.getText()));
 			}
 		});
 		btnHerbalTea.setBounds(56, 270, 180, 120);
@@ -310,7 +391,6 @@ public class CoffeePOS extends JFrame {
 		lblRooibosTea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		lblRooibosTea.setBounds(317, 389, 104, 16);
 		teaMenu.add(lblRooibosTea);
-		cmenu.show(categoryContainer, "Tea");
 		
 		
 		JPanel dripcoffeeMenu = new JPanel();
@@ -559,18 +639,74 @@ public class CoffeePOS extends JFrame {
 		pnlMenu.add(lblTeas);
 		
 		
-		JButton btnNewButton = new JButton("Cancel");
-		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		btnNewButton.setBounds(10, 381, 84, 33);
-		contentPane.add(btnNewButton);
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				oidata.removeAllElements();
+				isOrderEmpty = true;
+			}
+		});
+		btnCancel.setBounds(10, 470, 84, 33);
+		contentPane.add(btnCancel);
 		
+		
+		//edit item quantity button
 		JButton btnEdit = new JButton("Edit Amount");
-		btnEdit.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		btnEdit.setBounds(266, 381, 112, 33);
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int sel = itemlist.getSelectedIndex();
+				Order currorder = orders.get(orders.size()-1);
+				OrderItem curroi = (OrderItem)itemlist.getSelectedValue();
+				
+				if (sel>-1){
+					JFrame fAmount = new JFrame();
+					JTextField tfamount = new JTextField("        "+curroi.quantity);
+					tfamount.setHorizontalAlignment(SwingConstants.RIGHT);
+					JPanel  pbuttons = new JPanel();
+					JButton btnIncrease = new JButton("Increase");
+					JButton btnDecrease = new JButton("Decrease");
+					JButton btnUpdate = new JButton("Update");
+					pbuttons.add(btnIncrease);
+					pbuttons.add(tfamount);
+					pbuttons.add(btnDecrease);
+					JLabel avgLabel = new JLabel();		
+					fAmount.setSize(240, 200);					
+					fAmount.getContentPane().add(btnUpdate, BorderLayout.SOUTH);			
+					fAmount.getContentPane().add(pbuttons,BorderLayout.CENTER);
+					fAmount.setVisible(true);
+					
+					btnIncrease.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int curramount =Integer.parseInt(tfamount.getText().trim());						
+						    tfamount.setText(""+(++curramount));
+						}
+					});
+					
+					btnDecrease.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int curramount =Integer.parseInt(tfamount.getText().trim());
+							if (curramount>0){							
+								tfamount.setText(""+(--curramount));
+							}
+						}
+					});
+					
+					btnUpdate.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							curroi.quantity=Integer.parseInt(tfamount.getText().trim());
+							oidata.remove(sel);
+							oidata.insertElementAt(curroi, sel);
+							updateitemlabel(currorder);
+						}
+					});
+						
+				}
+			}
+		});
+		btnEdit.setBounds(266, 470, 112, 33);
 		contentPane.add(btnEdit);
 		
 		JButton btnOverridePrice = new JButton("Override Price");
-		btnOverridePrice.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 		btnOverridePrice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int sel = itemlist.getSelectedIndex();
@@ -581,7 +717,7 @@ public class CoffeePOS extends JFrame {
 					curroi.unitprice = Double.parseDouble(newprice$);
 					oidata.remove(sel);
 					oidata.insertElementAt(curroi, sel);	
-					updatepricelabel(currorder);
+					updateitemlabel(currorder);
 							
 				}
 				else {
@@ -590,7 +726,7 @@ public class CoffeePOS extends JFrame {
 			
 			}
 		});
-		btnOverridePrice.setBounds(119, 381, 125, 33);
+		btnOverridePrice.setBounds(119, 470, 125, 33);
 		contentPane.add(btnOverridePrice);
 		
 		JButton btnSubmitOrder = new JButton("Submit Order");
@@ -607,81 +743,93 @@ public class CoffeePOS extends JFrame {
 				}
 			}
 		});
-		btnSubmitOrder.setBounds(252, 514, 126, 49);
+		btnSubmitOrder.setBounds(254, 601, 126, 49);
 		contentPane.add(btnSubmitOrder);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 90, 368, 280);
+		scrollPane.setBounds(10, 120, 369, 339);
 		contentPane.add(scrollPane);
 		itemlist.setForeground(new Color(0, 0, 0));
 		itemlist.setFont(new Font("Courier New", Font.PLAIN, 14));
 		
 		
+		
 		scrollPane.setViewportView(itemlist);
 		
-		JLabel lblNewLabel = new JLabel("Sub Total:");
-		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblNewLabel.setBounds(20, 469, 105, 14);
-		contentPane.add(lblNewLabel);
-		
-		lblSubTotal = new JLabel("$0.00");
-		lblSubTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblSubTotal.setBounds(154, 469, 74, 14);
-		contentPane.add(lblSubTotal);
-		
 		JLabel labeldiscount = new JLabel("Discount:");
+		labeldiscount.setHorizontalAlignment(SwingConstants.RIGHT);
 		labeldiscount.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		labeldiscount.setBounds(20, 444, 74, 14);
+		labeldiscount.setBounds(31, 514, 74, 14);
 		contentPane.add(labeldiscount);
 		
 		JLabel lblDiscount = new JLabel("$0.00");
 		lblDiscount.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblDiscount.setBounds(154, 444, 74, 14);
+		lblDiscount.setBounds(154, 514, 74, 14);
 		contentPane.add(lblDiscount);
 		
 		JLabel label_Toal = new JLabel("Total: ");
+		label_Toal.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_Toal.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		label_Toal.setBounds(20, 519, 85, 14);
+		label_Toal.setBounds(20, 589, 85, 14);
 		contentPane.add(label_Toal);
 		
-		 lblTotal = new JLabel("$0.00");
-		 lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblTotal.setBounds(154, 519, 74, 14);
+		lblTotal = new JLabel("$0.00");
+		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		lblTotal.setBounds(154, 589, 74, 14);
 		contentPane.add(lblTotal);
 		
 		JLabel label_Tax = new JLabel("Tax: ");
+		label_Tax.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_Tax.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		label_Tax.setBounds(20, 494, 85, 14);
+		label_Tax.setBounds(20, 564, 85, 14);
 		contentPane.add(label_Tax);
 		
+		lblSubTotal = new JLabel("$0.00");
+		lblSubTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		lblSubTotal.setBounds(154, 538, 74, 14);
+		contentPane.add(lblSubTotal);
+				
 		lblTax = new JLabel("$0.00");
 		lblTax.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblTax.setBounds(154, 494, 74, 14);
+		lblTax.setBounds(154, 564, 74, 14);
 		contentPane.add(lblTax);
 		
 		JLabel lblCustomer = new JLabel("Quantity");
 		lblCustomer.setForeground(new Color(0, 0, 0));
 		lblCustomer.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-		lblCustomer.setBounds(95, 72, 69, 15);
+		lblCustomer.setBounds(95, 102, 69, 15);
 		contentPane.add(lblCustomer);
 		
 		JLabel lblOrder = new JLabel("Name");
 		lblOrder.setForeground(new Color(0, 0, 0));
 		lblOrder.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-		lblOrder.setBounds(10, 71, 61, 16);
+		lblOrder.setBounds(10, 101, 61, 16);
 		contentPane.add(lblOrder);
 		
 		JLabel lblUnitprice = new JLabel("Unit Price");
 		lblUnitprice.setForeground(Color.BLACK);
 		lblUnitprice.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-		lblUnitprice.setBounds(212, 72, 83, 14);
+		lblUnitprice.setBounds(212, 102, 83, 14);
 		contentPane.add(lblUnitprice);
 		
 		JLabel lblTotal_1 = new JLabel("Total");
 		lblTotal_1.setForeground(Color.BLACK);
 		lblTotal_1.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-		lblTotal_1.setBounds(332, 72, 46, 14);
+		lblTotal_1.setBounds(332, 102, 46, 14);
 		contentPane.add(lblTotal_1);
+		
+		JLabel label = new JLabel("Sub Total:");
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		label.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		label.setBounds(30, 539, 74, 14);
+		contentPane.add(label);
+		
+		
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(210, 180, 140));
+		panel.setBounds(0, 92, 386, 569);
+		contentPane.add(panel);
 		
 		//Tea Prices
 		items.put("Black Tea",1.5d);
@@ -703,7 +851,6 @@ public class CoffeePOS extends JFrame {
 		items.put("Mocha",3.5d);
 		items.put("Vanilla Latte",3.6d);
 		items.put("Caramel Latte",3.6d);
-
 		
 		
 		btnTea.addActionListener(new ActionListener() {
@@ -740,7 +887,9 @@ public class CoffeePOS extends JFrame {
 			isOrderEmpty=false;
 			newOrder.orderitems.add(oi);
 			oidata.addElement(oi);
-			updatepricelabel(newOrder);
+			System.out.println(newOrder.getSubtotal());
+			updateitemlabel(newOrder);
+			
 			
 			
 		}
@@ -752,16 +901,19 @@ public class CoffeePOS extends JFrame {
 			else {
 				currOrder.orderitems.add(oi);
 				oidata.addElement(oi);
-				updatepricelabel(currOrder);
+				updateitemlabel(currOrder);
 			}
 		}	
 		
 	}
 
-	private void updatepricelabel(Order currOrder) {
+	private void updateitemlabel(Order currOrder) {
+		System.out.println("updateitemlabel runned");
 		lblSubTotal.setText("$"+currOrder.getSubtotal());
 		lblTax.setText("$"+currOrder.getTax());
 		lblTotal.setText("$"+currOrder.getTotal());
+	
+
 	}
 	
 	class Order{
