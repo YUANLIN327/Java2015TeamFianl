@@ -82,10 +82,10 @@ public class CoffeePOS extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CoffeePOS frame = new CoffeePOS();
-					frame.setVisible(true);
-					frame.setSize(725,544);
-					frame.setTitle("iCoffee Shop");
+					CoffeePOS posFrame = new CoffeePOS();
+					posFrame.setVisible(true);
+					posFrame.setSize(725,544);
+					posFrame.setTitle("iCoffee Shop");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
