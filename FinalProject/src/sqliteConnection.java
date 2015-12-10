@@ -8,7 +8,7 @@ public class sqliteConnection {
 		// TODO Auto-generated method stub
 		try{
 			Class.forName("org.sqlite.JDBC");
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:EmployeeData.sqlite");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:Expresso.sqlite");
 			System.out.println("Connection built");
 			return conn;
 		}
